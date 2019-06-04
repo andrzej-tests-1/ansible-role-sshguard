@@ -1,0 +1,16 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+ipython = "== 7.3.0"
+
+[packages]
+molecule = "== 2.20"
+python-vagrant = "== 0.5.15"
+docker = "== 4.0.1"
+ansible = "== 2.7.0" #There is acutal issue within ansible 2.8.0, thats why is used 2.7.0
+
+[requires]
+python_version = "3.7"

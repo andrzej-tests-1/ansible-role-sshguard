@@ -1,0 +1,4 @@
+---
+
+sshguard__args: -a 5 -p 180 -s 600
+sshguard__whitelist: []

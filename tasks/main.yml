@@ -1,0 +1,45 @@
+---
+
+- name: Test ansible_distribution
+  assert:
+      that: ansible_distribution == 'Ubuntu'
+
+- name: Test ansible_distribution_release
+  assert:
+      that: ansible_distribution_release in ['xenial', 'bionic']
+
+- name: Run apt-get update
+  apt:
+      update_cache: true
+      cache_valid_time: 3600
+
+- name: Install package
+  apt:
+      name: sshguard
+      state: present
+
+- name: Update whitelist
+  template:
+      src: whitelist.j2
+      dest: /etc/sshguard/whitelist
+      owner: root
+      group: root
+      mode: 0600
+  notify:
+      - Restart sshguard
+
+- name: Configure service
+  template:
+      src: sshguard.j2
+      dest: /etc/default/sshguard
+      owner: root
+      group: root
+      mode: 0600
+  notify:
+      - Restart sshguard
+
+- name: Start service
+  systemd:
+      name: sshguard
+      enabled: true
+      state: started
